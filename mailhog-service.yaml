@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailhog 
+  labels:
+    run: mailhog 
+spec:
+  ports:
+  - port: 1025 
+    name: smtp-server 
+    protocol: TCP
+  - port: 8025
+    name: http-server
+    protocol: TCP
+  selector:
+    app: mailhog 

@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # EMail address used for ACME registration
+    email: eva.ramon@swisscom.com 
+    # Name of a secret to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-prod
+
+    # Enable HTTP01 challenge provider using nginx
+    solvers:
+#    - http01:
+#        ingress:
+#          class: nginx
+    # Enable DNS01 challenge provider using Cloudflare
+    - dns01:
+        cloudflare:
+          email: eramonsalinas@gmail.com 
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token

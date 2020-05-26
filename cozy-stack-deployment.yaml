@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cozy-stack
+  labels:
+    app: cozy-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cozy-stack
+  template:
+    metadata:
+      labels:
+        app: cozy-stack
+    spec:
+      volumes:
+      - name: secret-volume 
+        secret:
+          secretName: cozy-admin-passphrase-secret 
+      - name: config-map
+        configMap:
+          name: cozy-config-map
+      - name: cozy-storage
+        persistentVolumeClaim:
+          claimName: cozy-nfs
+      initContainers:
+      - name: cozy-init
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/var/lib/cozy"]
+        volumeMounts:
+        - name: cozy-storage
+          mountPath: /var/lib/cozy
+      containers:
+      - name: cozy-stack
+        image: eramon/cozy-stack
+#        image: cozy/cozy-app-dev
+#        env:
+#        - name: COZY_MAIL_USERNAME 
+#          valueFrom:
+#            secretKeyRef:
+#              name: cozy-mail 
+#              key: username.txt
+#        - name: COZY_MAIL_PASSWORD
+#          valueFrom:
+#            secretKeyRef:
+#              name: cozy-mail 
+#              key: pwd.txt
+        ports:
+          - containerPort: 8080 
+        volumeMounts:
+          - name: secret-volume
+            mountPath: "/etc/cozy/cozy-admin-passphrase"
+            subPath: cozy-admin-passphrase
+          - name: config-map
+            mountPath: "/etc/cozy/cozy.yaml"
+            subPath: cozy.yaml
+          - name: cozy-storage
+            mountPath: /var/lib/cozy

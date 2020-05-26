@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cozy-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  storageClassName: standard
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    server: 192.168.1.111
+    path: /volume1/cozy/storage

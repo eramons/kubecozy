@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: couchdb 
+  labels:
+    app: couchdb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: couchdb 
+  template:
+    metadata:
+      labels:
+        app: couchdb 
+    spec:
+      volumes:
+      - name: couchdb-data
+        persistentVolumeClaim:
+          claimName: couchdb-nfs
+      containers:
+      - name: couchdb
+        image: apache/couchdb:2.3 
+        ports:
+          - containerPort: 5984 
+        volumeMounts:
+        - name: couchdb-data
+          mountPath: /opt/couchdb/data
