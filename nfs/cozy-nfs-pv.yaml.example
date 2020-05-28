@@ -9,5 +9,5 @@ spec:
   accessModes:
   - ReadWriteMany
   nfs:
-    server: 192.168.1.111
-    path: /volume1/cozy/storage
+    server: ${serverIP} 
+    path: ${pathToStorage} 

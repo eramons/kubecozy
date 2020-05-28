@@ -15,8 +15,8 @@ fs:
   url: file://localhost/var/lib/cozy
 
 vault:
-  credentials_encryptor_key: /etc/cozy/vault.enc
-  credentials_decryptor_key: /etc/cozy/vault.dec
+  credentials_encryptor_key: /etc/cozy/keys/vault.enc
+  credentials_decryptor_key: /etc/cozy/keys/vault.dec
 
 konnectors:
 #  cmd: /usr/share/cozy/konnector-nsjail-run.sh
@@ -26,7 +26,7 @@ log:
   syslog: false
 
 mail:
-  host: mailhog 
+  host: smtp-service 
   port: 1025 
   disable_tls: true 
   skip_certificate_validation: true 

@@ -4,9 +4,7 @@ resources:
 - letsencrypt-prod.yaml
 - cozy-ingress.yaml
 
-# PV and PVC
-- cozy-nfs-pv.yaml
-- couchdb-nfs-pv.yaml
+# PVC
 - cozy-stack-pvc.yaml
 - couchdb-pvc.yaml
 
@@ -20,13 +18,10 @@ resources:
 - cozy-stack-deployment.yaml 
 - mailhog-deployment.yaml
 
-# Secrets generated only once and manually
-# - cloudflare.yaml
-
 # ConfigMaps
 configMapGenerator:
 - name: cozy-config-map
   files:
   - config/cozy.yaml
 
-
+# Secrets generated only once and manually, therefore not included here

@@ -18,6 +18,14 @@ spec:
       - name: secret-volume 
         secret:
           secretName: cozy-admin-passphrase-secret 
+      - name: keys-secret-volume
+        secret:
+          secretName: cozy-vault-secret 
+          items:
+          - key: vault.enc 
+            path: vault.enc
+          - key: vault.dec
+            path: vault.dec 
       - name: config-map
         configMap:
           name: cozy-config-map
@@ -25,7 +33,7 @@ spec:
         persistentVolumeClaim:
           claimName: cozy-nfs
       initContainers:
-      - name: cozy-init
+      - name: cozy-init-nfs
         image: busybox
         command: ["/bin/chmod","-R","777", "/var/lib/cozy"]
         volumeMounts:
@@ -34,24 +42,14 @@ spec:
       containers:
       - name: cozy-stack
         image: eramon/cozy-stack
-#        image: cozy/cozy-app-dev
-#        env:
-#        - name: COZY_MAIL_USERNAME 
-#          valueFrom:
-#            secretKeyRef:
-#              name: cozy-mail 
-#              key: username.txt
-#        - name: COZY_MAIL_PASSWORD
-#          valueFrom:
-#            secretKeyRef:
-#              name: cozy-mail 
-#              key: pwd.txt
         ports:
           - containerPort: 8080 
         volumeMounts:
           - name: secret-volume
             mountPath: "/etc/cozy/cozy-admin-passphrase"
             subPath: cozy-admin-passphrase
+          - name: keys-secret-volume
+            mountPath: "/etc/cozy/keys"
           - name: config-map
             mountPath: "/etc/cozy/cozy.yaml"
             subPath: cozy.yaml

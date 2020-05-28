@@ -1,4 +1,11 @@
 cozy-admin-passphrase
+vault.enc
+vault.dec
+cozy-ingress.yaml
+letsencrypt-prod.yaml
 cloudflare.yaml
+nfs/couchdb-nfs-pv.yaml
+nfs/cozy-nfs-pv.yaml
 errors.txt
 readme.txt
+TODO.md
