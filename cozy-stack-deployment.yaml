@@ -26,6 +26,9 @@ spec:
             path: vault.enc
           - key: vault.dec
             path: vault.dec 
+      - name: dbsecret
+        secret:
+          secretName: cozy-db-secret
       - name: config-map
         configMap:
           name: cozy-config-map
@@ -44,6 +47,17 @@ spec:
         image: eramon/cozy-stack
         ports:
           - containerPort: 8080 
+        env:
+          - name: COUCHDB_PASSPHRASE 
+            valueFrom:
+              secretKeyRef:
+                name: dbsecret 
+                key: dbpassphrase 
+          - name: COUCHDB_USERNAME 
+            valueFrom:
+              secretKeyRef:
+                name: dbsecret
+                key: dbusername 
         volumeMounts:
           - name: secret-volume
             mountPath: "/etc/cozy/cozy-admin-passphrase"
