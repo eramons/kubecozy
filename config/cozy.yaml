@@ -7,7 +7,7 @@ admin:
   secret_filename: cozy-admin-passphrase
 
 couchdb:
-  url: http://{{.Env.COUCHDB_USERNAME}}:{{.Env.COUCHDB_PASSPHRASE}}@couchdb:5984/
+  url: http://couchdb:5984
 
 subdomains: nested 
 
@@ -36,4 +36,5 @@ registries:
   - https://apps-registry.cozycloud.cc/selfhosted
   - https://apps-registry.cozycloud.cc/banks
   - https://apps-registry.cozycloud.cc/
+
 

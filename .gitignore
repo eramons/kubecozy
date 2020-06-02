@@ -1,6 +1,8 @@
 cozy-admin-passphrase
 vault.enc
 vault.dec
+dbpassphrase
+dbusername
 cozy-ingress.yaml
 letsencrypt-prod.yaml
 cloudflare.yaml

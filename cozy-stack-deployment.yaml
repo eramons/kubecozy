@@ -26,9 +26,6 @@ spec:
             path: vault.enc
           - key: vault.dec
             path: vault.dec 
-      - name: dbsecret
-        secret:
-          secretName: cozy-db-secret
       - name: config-map
         configMap:
           name: cozy-config-map
@@ -51,12 +48,12 @@ spec:
           - name: COUCHDB_PASSPHRASE 
             valueFrom:
               secretKeyRef:
-                name: dbsecret 
+                name: cozy-db-secret 
                 key: dbpassphrase 
           - name: COUCHDB_USERNAME 
             valueFrom:
               secretKeyRef:
-                name: dbsecret
+                name: cozy-db-secret 
                 key: dbusername 
         volumeMounts:
           - name: secret-volume

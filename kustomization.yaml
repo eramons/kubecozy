@@ -11,6 +11,7 @@ resources:
 # Services
 - couchdb-service.yaml
 - cozy-stack-service.yaml
+- smtp-service.yaml
 - mailhog-service.yaml
 
 # Deployments
