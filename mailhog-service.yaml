@@ -1,12 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mailhog 
-  labels:
-    run: mailhog 
+  name: mailhog-service
 spec:
   ports:
   - port: 8025
     protocol: TCP
   selector:
-    app: mailhog 
+    app: mailhog
