@@ -26,3 +26,15 @@ spec:
         volumeMounts:
         - name: couchdb-data
           mountPath: /opt/couchdb/data
+        env:
+          - name: COUCHDB_USER
+            valueFrom:
+              secretKeyRef:
+                name: cozy-db-secret
+                key: dbusername
+          - name: COUCHDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cozy-db-secret
+                key: dbpassphrase
+
