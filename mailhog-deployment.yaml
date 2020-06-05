@@ -19,4 +19,6 @@ spec:
         image: mailhog/mailhog:latest 
         ports:
           - containerPort: 1025
+            name: smtp
           - containerPort: 8025 
+            name: http
