@@ -1,6 +1,6 @@
 cozy-admin-passphrase
-vault.enc
-vault.dec
+vault/vault.enc
+vault/vault.dec
 dbpassphrase
 dbusername
 cozy-ingress.yaml

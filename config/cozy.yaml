@@ -7,8 +7,8 @@ admin:
   secret_filename: cozy-admin-passphrase
 
 couchdb:
-  url: http://couchdb:5984
-
+#  url: http://couchdb:5984
+  url: 'http://{{.Env.COUCHDB_USERNAME}}:{{.Env.COUCHDB_PASSPHRASE}}@couchdb:5984/'
 subdomains: nested 
 
 fs:

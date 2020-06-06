@@ -30,11 +30,11 @@ spec:
           - name: COUCHDB_USER
             valueFrom:
               secretKeyRef:
-                name: cozy-db-secret
+                name: db-secret
                 key: dbusername
           - name: COUCHDB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: cozy-db-secret
+                name: db-secret
                 key: dbpassphrase
 
