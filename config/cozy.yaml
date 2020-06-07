@@ -7,8 +7,7 @@ admin:
   secret_filename: cozy-admin-passphrase
 
 couchdb:
-#  url: http://couchdb:5984
-  url: 'http://{{.Env.COUCHDB_USERNAME}}:{{.Env.COUCHDB_PASSPHRASE}}@couchdb:5984/'
+  url: "http://{{.Env.COUCHDB_USERNAME}}:{{.Env.COUCHDB_PASSPHRASE}}@couchdb:5984"
 subdomains: nested 
 
 fs:
@@ -18,11 +17,8 @@ vault:
   credentials_encryptor_key: /etc/cozy/keys/vault.enc
   credentials_decryptor_key: /etc/cozy/keys/vault.dec
 
-konnectors:
-#  cmd: /usr/share/cozy/konnector-nsjail-run.sh
-
 log:
-  level: debug
+  level: info 
   syslog: false
 
 mail:

@@ -48,12 +48,12 @@ spec:
           - name: COUCHDB_PASSPHRASE 
             valueFrom:
               secretKeyRef:
-                name: cozy-db-secret 
+                name: db-secret 
                 key: dbpassphrase 
           - name: COUCHDB_USERNAME 
             valueFrom:
               secretKeyRef:
-                name: cozy-db-secret 
+                name: db-secret 
                 key: dbusername 
         volumeMounts:
           - name: secret-volume
