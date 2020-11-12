@@ -1,0 +1,28 @@
+resources:
+
+# Ingress and certmanager
+- letsencrypt-prod.yaml
+- cozy-ingress.yaml
+
+# PVC
+- cozy-stack-pvc.yaml
+- couchdb-pvc.yaml
+
+# Services
+- couchdb-service.yaml
+- cozy-stack-service.yaml
+- smtp-service.yaml
+- mailhog-service.yaml
+
+# Deployments
+- couchdb-deployment.yaml
+- cozy-stack-deployment.yaml 
+- mailhog-deployment.yaml
+
+# ConfigMaps
+configMapGenerator:
+- name: cozy-config-map
+  files:
+  - config/cozy.yaml
+
+# Secrets generated only once and manually, therefore not included here

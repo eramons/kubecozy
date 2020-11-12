@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cozy-stack
+  labels:
+    app: cozy-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cozy-stack
+  template:
+    metadata:
+      labels:
+        app: cozy-stack
+    spec:
+      volumes:
+      - name: secret-volume 
+        secret:
+          secretName: cozy-admin-passphrase-secret 
+      - name: keys-secret-volume
+        secret:
+          secretName: cozy-vault-secret 
+          items:
+          - key: vault.enc 
+            path: vault.enc
+          - key: vault.dec
+            path: vault.dec 
+      - name: config-map
+        configMap:
+          name: cozy-config-map
+      - name: cozy-storage
+        persistentVolumeClaim:
+          claimName: cozy-nfs
+      initContainers:
+      - name: cozy-init-nfs
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/var/lib/cozy"]
+        volumeMounts:
+        - name: cozy-storage
+          mountPath: /var/lib/cozy
+      containers:
+      - name: cozy-stack
+        image: eramon/cozy-stack-arm64v8
+        ports:
+          - containerPort: 8080 
+        env:
+          - name: COUCHDB_PASSPHRASE 
+            valueFrom:
+              secretKeyRef:
+                name: db-secret 
+                key: dbpassphrase 
+          - name: COUCHDB_USERNAME 
+            valueFrom:
+              secretKeyRef:
+                name: db-secret 
+                key: dbusername 
+        volumeMounts:
+          - name: secret-volume
+            mountPath: "/etc/cozy/cozy-admin-passphrase"
+            subPath: cozy-admin-passphrase
+          - name: keys-secret-volume
+            mountPath: "/etc/cozy/keys"
+          - name: config-map
+            mountPath: "/etc/cozy/cozy.yaml"
+            subPath: cozy.yaml
+          - name: cozy-storage
+            mountPath: /var/lib/cozy

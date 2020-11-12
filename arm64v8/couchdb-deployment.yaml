@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: couchdb 
+  labels:
+    app: couchdb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: couchdb 
+  template:
+    metadata:
+      labels:
+        app: couchdb 
+    spec:
+      volumes:
+      - name: couchdb-data
+        persistentVolumeClaim:
+          claimName: couchdb-nfs
+      containers:
+      - name: couchdb
+        image: arm64v8/couchdb:3.1.0 
+        ports:
+          - containerPort: 5984 
+        volumeMounts:
+        - name: couchdb-data
+          mountPath: /opt/couchdb/data
+        env:
+          - name: COUCHDB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: dbusername
+          - name: COUCHDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: dbpassphrase
+
