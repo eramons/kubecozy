@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cozy-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik    
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/acme-challenge-type: dns01
+
+spec:
+  tls:
+  - hosts:
+    - '*.cozy.example.com'
+    - cozy.example.com 
+    secretName: cozy-tls
+  rules:
+  - host: '*.cozy.example.com'
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cozy-stack 
+          servicePort: 8080 
+
+  - host: cozy.example.com 
+      - path: /mailhog
+        backend:
+          serviceName: mailhog
+          servicePort: 8025
+
+  - host: cozy.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cozy-stack 
+          servicePort: 8080 
+
